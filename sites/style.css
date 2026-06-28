@@ -1,0 +1,759 @@
+@font-face {
+    font-family: 'tsushimafont'; /* Como você vai chamar a fonte no código */
+    src: url('font/Tsushima.otf') format('opentype'); /* Caminho do arquivo */
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS / CORES ATUALIZADAS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dourado-washi: #e2d3a9; 
+    --dourado-escuro: #eec862;
+    --preto: #111111;
+    --branco: #ffffff;
+    
+    /* VARIÁVEIS DE FONTE JAPONESA */
+    --fonte-tradicional: 'Shippori Mincho', serif;
+    --fonte-moderna: 'Sawarabi Gothic', sans-serif;
+}
+
+body {
+    font-family: var(--fonte-tradicional); /* Fonte serifada tradicional como padrão */
+    background-color: #e9e8e8; 
+    color: #111111; 
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   NAV BAR CORRIGIDA 
+   ========================================================================== */
+.navbar {
+    /* Substitua a cor sólida antiga pela sua imagem de fundo */
+    background: 
+                url('imagens/canva-golden-gradient-background-MAHAKHxrySE.jpg') no-repeat center center/cover;
+                
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px solid var(--branco);
+    font-family: 'tsushimafont';
+}
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    bottom: -11px; 
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-image: radial-gradient(circle, #ebcb6b 20%, transparent 20%),
+                      radial-gradient(circle, #efd992 20%, transparent 20%);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+    opacity: 0.7;
+}
+
+.nav-logo {
+    font-family: 'tsushimafont'var(--fonte-tradicional);
+    font-weight: 700;
+    font-size: 26px;
+    color: #2b2519; 
+    letter-spacing: 5px; /* Espaçamento marcante estilo oriental */
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    font-family: var(--fonte-moderna); /* Gothic para links para leitura limpa */
+    align-items: center;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #2b2519;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    display: inline-block;
+}
+
+.nav-links a:hover, 
+.nav-links a.active {
+    color: var(--branco);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 12px;
+    border-radius: 2px;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO DA LOGO DA STEAM (IMAGEM)
+   ========================================================================== */
+.steam-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    padding: 0; /* Remove qualquer espaçamento antigo */
+}
+
+.steam-icon-img {
+    width: 32px;  /* Controla a largura da logo */
+    height: 32px; /* Controla a altura da logo */
+    object-fit: contain; /* Garante que a imagem não fique distorcida */
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2)); /* Sombra leve na logo */
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Efeito ao passar o mouse: a logo ganha destaque e sobe levemente */
+.steam-link:hover {
+    transform: translateY(-2px);
+}
+
+.steam-link:hover .steam-icon-img {
+    opacity: 0.8; /* Dá o feedback visual de clique */
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                url('imagens/ghost-of-tsushima-directors-cut-uhd-4k-wallpaper.jpeg') no-repeat center center/cover;
+    height: 70vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--branco);
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-family: var(--fonte-tradicional);
+    font-weight: 700;
+    font-size: 52px;
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+    color: var(--dourado-escuro); 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-family: var(--fonte-moderna);
+    font-size: 16px;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.shodo-art {
+    display: block;
+    font-size: 90px;
+    color: rgba(255, 85, 85, 0.25); 
+    font-family: var(--fonte-tradicional);
+    line-height: 1;
+    margin-bottom: -5px;
+    font-weight: 700;
+}
+
+.btn-main {
+    font-family: var(--fonte-moderna);
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: transparent;
+    color: var(--dourado-escuro);
+    border: 2px solid var(--dourado-escuro);
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: 0.4s ease;
+}
+
+.btn-main:hover {
+    background-color: var(--dourado-escuro);
+    color: var(--preto);
+}
+
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL E RODAPÉ
+   ========================================================================== */
+.container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.game-intro {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    
+}
+
+.intro-text {
+    flex: 1; 
+}
+
+.intro-text h2 {
+    font-family: var(--fonte-tradicional);
+    font-size: 36px;
+    color: var(--preto);
+    font-weight: 700;
+}
+
+.divider {
+    border: 0;
+    height: 3px;
+    background-color: var(--dourado-escuro);
+    width: 60px;
+    margin: 15px 0 25px 0;
+}
+
+.intro-text p {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.intro-image {
+    flex: 1; 
+}
+
+.intro-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 10px 10px 0px var(--preto); 
+    border: 1px solid #ddd;
+}
+
+/* ==========================================================================
+   SESSÃO: O CAMINHO DO SAMURAI (COM IMAGEM DE FUNDO)
+   ========================================================================== */
+.caminho-samurai {
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
+                url('imagens/caminho-samurai-bg.jpg') no-repeat center center/cover;
+    background-attachment: fixed; 
+    padding: 80px 20px;
+    color: var(--branco);
+    text-align: center;
+}
+
+.caminho-samurai h2 {
+    font-family: var(--fonte-tradicional);
+    font-size: 38px;
+    color: var(--dourado-escuro);
+    letter-spacing: 3px;
+}
+
+.caminho-samurai .divider {
+    margin: 15px auto 25px auto;
+}
+
+.caminho-samurai p {
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    color: #e0e0e0;
+    font-size: 17px;
+}
+
+/* ==========================================================================
+   NOVA SEÇÃO: PRÉVIA DA GAMEPLAY
+   ========================================================================== */
+.gameplay-preview {
+    margin-top: 80px;
+    border-top: 1px solid #ccc;
+    padding-top: 60px;
+}
+
+.preview-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.preview-header h2 {
+    font-family: var(--fonte-tradicional);
+    font-size: 36px;
+    color: var(--preto);
+}
+
+.preview-header .divider {
+    margin: 15px auto;
+}
+
+.subtitle {
+    font-family: var(--fonte-moderna);
+    font-size: 15px;
+    color: #666;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.preview-card {
+    background: #fdfdfd;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease;
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover; /* Recorta a imagem perfeitamente no container */
+    border-bottom: 3px solid var(--dourado-escuro);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content h3 {
+    font-family: var(--fonte-tradicional);
+    font-size: 22px;
+    color: var(--preto);
+    margin-bottom: 12px;
+}
+
+.card-content p {
+    font-family: var(--fonte-moderna);
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.footer {
+    font-family: var(--fonte-moderna);
+    background-color: var(--preto);
+    color: #777;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 13px;
+    border-top: 4px solid var(--dourado-escuro);
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES (RESPONSIVIDADE PARA CELULARES E TABLETS)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-links li {
+        margin-left: 0; 
+    }
+
+    .steam-item {
+        margin-top: 5px;
+    }
+
+    .hero-section {
+        height: 60vh; 
+    }
+
+    .hero-content h1 {
+        font-size: 34px; 
+        letter-spacing: 3px;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+    }
+
+    .shodo-art {
+        font-size: 65px; 
+    }
+
+    .container {
+        margin: 40px auto;
+    }
+
+    .game-intro {
+        flex-direction: column; 
+        gap: 30px;
+    }
+
+    .intro-text h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .divider {
+        margin: 15px auto 25px auto; 
+    }
+
+    .intro-image img {
+        box-shadow: 6px 6px 0px var(--preto);
+    }
+
+    .caminho-samurai {
+        padding: 50px 20px;
+        background-attachment: scroll; 
+    }
+
+    .caminho-samurai h2 {
+        font-size: 28px;
+    }
+
+    .caminho-samurai p {
+        font-size: 15px;
+    }
+
+    /* Responsividade da nova seção de Gameplay */
+    .preview-grid {
+        grid-template-columns: 1fr; /* Vira uma única coluna no celular */
+        gap: 25px;
+    }
+
+    .preview-header h2 {
+        font-size: 28px;
+    }
+}
+
+
+
+/* comentário insano diferenciando página do index e do sobre :fire emoji:*/ 
+
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS DE COMPORTAMENTO
+   ========================================================================== */
+html {
+    scroll-behavior: smooth; /* Faz a tela deslizar suavemente ao clicar nos links */
+}
+
+.section-spacing {
+    margin-bottom: 80px; 
+    scroll-margin-top: 120px; 
+}
+
+/* Reduz a altura do banner principal para páginas internas */
+.hero-internal {
+    height: 45vh !important;
+}
+
+/* ==========================================================================
+   SEÇÃO DE SELEÇÃO DE ASSUNTOS (QUICK NAV)
+   ========================================================================== */
+.quick-nav {
+    background-color: #dfdeb8;
+    padding: 5px 0;
+    text-align: center;
+    border-bottom: 2px solid var(--branco);
+}
+
+.quick-nav h3 {
+    font-family: var(--fonte-tradicional);
+    font-size: 18px;
+    color: #2b2519;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-quick {
+    font-family: var(--fonte-moderna);
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--preto);
+    background-color: var(--branco);
+    padding: 8px 18px;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-quick:hover {
+    background-color: var(--preto);
+    color: var(--branco);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   LOGOS DE PLATAFORMAS E AJUSTES DE LOJAS
+   ========================================================================== */
+.platform-card {
+    flex: 1; 
+    min-width: 280px; 
+    width: 100%;
+}
+
+.platform-card h4 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.platform-logos {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    margin-bottom: 25px;
+    background: #f0eeee;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.platform-img {
+    height: 100px; /* Controla a altura padrão das logos de console/pc */
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(30%);
+    transition: filter 0.3s ease;
+}
+
+.platform-img:hover {
+    filter: grayscale(0%);
+}
+
+.store-buttons {
+    display: flex; 
+    gap: 85px; 
+    justify-content: center; 
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.btn-steam-store {
+    padding: 8px 20px !important; 
+    font-size: 12px !important; 
+    background: #171a21 !important; 
+    color: #fff !important; 
+    border-color: #171a21 !important;
+}
+
+.btn-ps-store {
+    padding: 8px 20px !important; 
+    font-size: 12px !important; 
+    background: #003087 !important; 
+    color: #fff !important; 
+    border-color: #003087 !important;
+}
+
+/* ==========================================================================
+   LAYOUTS ADICIONAIS DA FICHA TÉCNICA
+   ========================================================================== */
+.dev-card-layout {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    padding: 30px 20px;
+}
+
+.dev-logo-container {
+    height: 100px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 15px;
+}
+
+.dev-page-logo {
+    max-height: 80px; 
+    width: auto; 
+    object-fit: contain;
+}
+
+.dev-page-logo-goty{
+    max-height: 130px; 
+    width: auto; 
+    object-fit: contain;
+}
+
+.awards-card {
+    padding: 30px 25px; 
+    background-color: #fffdf7; 
+    border-left: 4px solid var(--dourado-escuro);
+}
+
+.awards-list {
+    font-family: var(--fonte-moderna); 
+    font-size: 13px; 
+    color: #444; 
+    list-style: square; 
+    padding-left: 20px; 
+    line-height: 1.8;
+}
+
+.text-center {
+    padding: 0 !important;
+}
+
+/* Requisitos */
+.spec-card-min {
+    padding: 25px; 
+    border-top: 4px solid #888;
+}
+
+.spec-card-rec {
+    padding: 25px; 
+    border-top: 4px solid var(--dourado-escuro); 
+    background-color: #fffdf7;
+}
+
+.spec-card-min h3, .spec-card-rec h3 {
+    font-size: 18px; 
+    margin-bottom: 15px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 8px;
+}
+
+.spec-card-min h3 small, .spec-card-rec h3 small {
+    font-size: 12px; 
+    color: #777; 
+    font-weight: normal; 
+    display: block;
+}
+
+.specs-list {
+    font-family: var(--fonte-moderna); 
+    list-style: none; 
+    font-size: 13px; 
+    color: #444; 
+    line-height: 2;
+}
+
+/* Reviews */
+.review-padding {
+    padding: 25px;
+}
+
+.review-meta {
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 10px; 
+    font-family: var(--fonte-moderna); 
+    font-size: 12px; 
+    color: #777;
+}
+
+.stars {
+    color: var(--dourado-escuro);
+}
+
+.review-text {
+    font-family: var(--fonte-moderna); 
+    font-size: 13px; 
+    color: #555; 
+    font-style: italic;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE EXCLUSIVA ADICIONAL
+   ========================================================================== */
+@media (max-width: 768px) {
+    .quick-links {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 20px;
+    }
+    
+    .hero-internal {
+        height: 35vh !important;
+    }
+}
+
+/* Reduz a altura e troca a imagem de fundo exclusivamente para a página de infos */
+.hero-internal {
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
+                url('imagens/download\ \(1\).jpg') no-repeat center center/cover !important;
+    height: 45vh !important;
+}
+
+@keyframes fadeUpAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Começa 30 pixels mais para baixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* Termina na posição original dele */
+    }
+}
+
+.fade-up {
+    animation: fadeUpAnimation 1s ease-out forwards;
+}
+
+/* ==========================================================================
+   SEÇÃO DE CLASSIFICAÇÃO INDICATIVA (REDUZIDA)
+   ========================================================================== */
+.classificacao-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+    background: rgba(0, 0, 0, 0.03); /* Um fundo cinza bem sutil */
+    padding: 15px;
+    border-radius: 4px;
+    border-left: 3px solid #e52229; /* Borda vermelha fina simulando o selo 18 */
+}
+
+.class-badge {
+    width: 45px;  /* Tamanho ideal para não quebrar o layout */
+    height: 45px;
+    object-fit: contain;
+}
+
+.class-texto h3 {
+    font-family: var(--fonte-tradicional);
+    font-size: 15px;
+    color: var(--preto);
+    margin-bottom: 2px;
+}
+
+.class-texto p {
+    font-family: var(--fonte-moderna);
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 0 !important; /* Evita que a margem de parágrafos antiga quebre o alinhamento */
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost of Tsushima - Explorar a Ilha</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">Ghost of Tsushima</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="#">História</a></li>
+            <li><a href="#" class="active">Gameplay</a></li>
+            <li><a href="infos.html">Infos</a></li>
+            <li class="steam-item">
+                <a href="https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/" target="_blank" title="Ver na Steam" class="steam-link">
+                    <img src="imagens/download (4).png" alt="Steam Logo" class="steam-icon-img">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="hero-section hero-internal">
+        <div class="hero-content">
+            <span class="shodo-art">対馬</span>
+            <h1>Explorar a Ilha</h1>
+            <p>Domine as técnicas de sobrevivência e escolha o seu método de libertação.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="gameplay-preview" style="margin-top: 0; border-top: none; padding-top: 0;">
+            <div class="preview-header">
+                <h2>Mecânicas de Jogo</h2>
+                <hr class="divider">
+                <p class="subtitle">Clique em um dos caminhos abaixo para expandir os segredos da jogabilidade.</p>
+            </div>
+
+            <div class="accordion-container">
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>01. O Caminho da Katana (Combate)</span>
+                        <span class="icon-plus">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p>O combate direto exige precisão, ritmo e respeito ao código samurai. Você aprenderá a dominar diferentes **Posturas de Combate (Stances)**, cada uma projetada especificamente para quebrar a defesa de um tipo de inimigo:</p>
+                            <ul>
+                                <li><strong>Postura da Pedra:</strong> Ideal contra espadachins.</li>
+                                <li><strong>Postura da Água:</strong> Perfeita para quebrar defesas de escudeiros.</li>
+                                <li><strong>Postura do Vento:</strong> Eficaz contra lanceiros.</li>
+                                <li><strong>Postura da Lua:</strong> Feita para subjugar inimigos brutais e pesados.</li>
+                            </ul>
+                            <p>Aparar (Parry) no momento exato abre brechas letais para contra-ataques sangrentos e cinematográficos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>02. As táticas do Fantasma (Stealth)</span>
+                        <span class="icon-plus">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p>Quando a honra não é suficiente para salvar seu povo, Jin deve se tornar o Fantasma. Essa vertente foca na furtividade, distração e eliminação psicológica dos mongóis.</p>
+                            <p>Utilize ferramentas não convencionais como **bombas de fumaça, kunais de arremesso, bombinhas de distração e o arco longo**. Ataque de cima dos telhados, assassine pelas costas através de portas de papel *shoji* e use o medo para fazer os inimigos fugirem aterrorizados do campo de batalha.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>03. A Natureza como Guia (Exploração)</span>
+                        <span class="icon-plus">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p>Em Tsushima, não existem bússolas artificiais ou setas flutuantes na tela. O mundo responde a você de forma orgânica:</p>
+                            <ul>
+                                <li><strong>O Vento Guia:</strong> Deslize o dedo para invocar uma lufada de vento que sopra na direção do seu objetivo.</li>
+                                <li><strong>Pássaros de Ouro:</strong> Siga aves brilhantes que cruzam o céu para encontrar segredos escondidos e personagens secundários.</li>
+                                <li><strong>Raposas Orientadoras:</strong> Encontre tocas de raposas e siga-as até santuários *Inari* ocultos para desbloquear melhorias para o seu personagem.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy Alisson Carvalho, Rafael Oliveira.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionItem = button.parentElement;
+                
+                // Fecha qualquer outro que esteja aberto (opcional, cria efeito sanfona)
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    if (item !== accordionItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.accordion-content').style.maxHeight = null;
+                    }
+                });
+
+                // Alterna o estado do atual
+                accordionItem.classList.toggle('active');
+                const content = accordionItem.querySelector('.accordion-content');
+                
+                if (accordionItem.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
