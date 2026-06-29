@@ -1,56 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Sawarabi+Gothic&family=Shippori+Mincho:wght@400;700&display=swap');
+
 @font-face {
-    font-family: 'tsushimafont'; /* Como você vai chamar a fonte no código */
-    src: url('font/Tsushima.otf') format('opentype'); /* Caminho do arquivo */
+    font-family: 'tsushimafont';
+    src: url('font/Tsushima.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
-
-/* ==========================================================================
-   CONFIGURAÇÕES GERAIS / CORES ATUALIZADAS
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 :root {
-    --dourado-washi: #e2d3a9; 
-    --dourado-escuro: #eec862;
-    --preto: #111111;
-    --branco: #ffffff;
+    --gold-bright:    #e8c96a;   
+    --gold-mid:       #c9a84c;   
+    --gold-dark:      #8a6820;   
+    --gold-glow:      rgba(232, 201, 106, 0.18);
+    --white:          #f4f0e8;   
+    --white-dim:      #c8c0b0;   
+    --black-deep:     #06070a;   
+    --black-mid:      #0d0e12;   
+    --black-panel:    #111218;   
+    --black-border:   rgba(232, 201, 106, 0.2);
+    --text-body:      #d8d0c0;   
     
-    /* VARIÁVEIS DE FONTE JAPONESA */
+    --dourado-washi:  #e2d3a9; 
+    --dourado-escuro: #eec862;
+    --preto:          #111111;
+    --branco:         #ffffff;
     --fonte-tradicional: 'Shippori Mincho', serif;
     --fonte-moderna: 'Sawarabi Gothic', sans-serif;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: var(--fonte-tradicional); /* Fonte serifada tradicional como padrão */
-    background-color: #e9e8e8; 
-    color: #111111; 
+    font-family: 'Lora', serif;
+    background-color: var(--black-deep);
+    color: var(--text-body);
     line-height: 1.7;
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   NAV BAR CORRIGIDA 
-   ========================================================================== */
+h1, h2, h3, h4, .nav-links a, .page-tab, .btn-primary, .btn-main, .btn-ghost, .btn-quick, .tag, .stat-number, .stat-label, .section-eyebrow, .hero-eyebrow, .footer-logo {
+    font-family: 'Cinzel', serif;
+}
+
+h1 {
+    font-weight: 900;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    line-height: 1.1;
+    font-size: clamp(2.5em, 7vw, 5.2em);
+    margin-bottom: 12px;
+    text-shadow: 0 0 60px rgba(232, 201, 106, 0.3);
+}
+
+h2 {
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 1.9em;
+}
+
+h3 {
+    font-weight: 600;
+    color: var(--gold-bright);
+    letter-spacing: 2px;
+    font-size: 1.2em;
+}
+
+h4 {
+    color: var(--white-dim);
+    letter-spacing: 1px;
+    font-size: 1em;
+}
+
+p {
+    color: var(--text-body);
+    font-size: 1em;
+}
+
+a {
+    color: var(--gold-bright);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover { 
+    color: var(--white); 
+}
+
 .navbar {
-    /* Substitua a cor sólida antiga pela sua imagem de fundo */
-    background: 
-                url('imagens/canva-golden-gradient-background-MAHAKHxrySE.jpg') no-repeat center center/cover;
-                
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 10%;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    border-bottom: 3px solid var(--branco);
-    font-family: 'tsushimafont';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 10%;
+    background: linear-gradient(to bottom, rgba(6,7,10,0.97) 0%, rgba(6,7,10,0.0) 100%);
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s, padding 0.3s;
+}
+
+.navbar.scrolled {
+    background: rgba(6, 7, 10, 0.97);
+    border-bottom-color: var(--black-border);
+    padding: 12px 10%;
 }
 
 .navbar::after {
@@ -60,154 +125,292 @@ body {
     left: 0;
     width: 100%;
     height: 8px;
-    background-image: radial-gradient(circle, #ebcb6b 20%, transparent 20%),
-                      radial-gradient(circle, #efd992 20%, transparent 20%);
+    background-image: radial-gradient(circle, var(--gold-mid) 20%, transparent 20%),
+                      radial-gradient(circle, var(--gold-bright) 20%, transparent 20%);
     background-size: 10px 10px;
     background-position: 0 0, 5px 5px;
-    opacity: 0.7;
+    opacity: 0.3;
 }
 
 .nav-logo {
-    font-family: 'tsushimafont'var(--fonte-tradicional);
+    font-family: 'tsushimafont', serif;
+    font-size: 1.4em;
     font-weight: 700;
-    font-size: 26px;
-    color: #2b2519; 
-    letter-spacing: 5px; /* Espaçamento marcante estilo oriental */
+    color: var(--gold-bright);
+    letter-spacing: 5px;
+    text-transform: uppercase;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    font-family: var(--fonte-moderna); /* Gothic para links para leitura limpa */
+    gap: 30px;
     align-items: center;
 }
 
-.nav-links li {
-    margin-left: 25px;
-}
-
 .nav-links a {
-    text-decoration: none;
-    color: #2b2519;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 1px;
+    font-size: 0.8em;
+    letter-spacing: 2px;
+    color: var(--white-dim);
+    text-transform: uppercase;
     transition: 0.3s ease;
-    display: inline-block;
+    position: relative;
+    padding: 5px 0;
 }
 
-.nav-links a:hover, 
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold-bright);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--gold-bright);
+}
+
+.nav-links a:hover::after { 
+    width: 100%; 
+}
+
 .nav-links a.active {
-    color: var(--branco);
-    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    background-color: rgba(232, 201, 106, 0.15);
     padding: 5px 12px;
     border-radius: 2px;
 }
 
-/* ==========================================================================
-   ESTILIZAÇÃO DA LOGO DA STEAM (IMAGEM)
-   ========================================================================== */
 .steam-link {
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease;
-    padding: 0; /* Remove qualquer espaçamento antigo */
+    padding: 0;
 }
 
 .steam-icon-img {
-    width: 32px;  /* Controla a largura da logo */
-    height: 32px; /* Controla a altura da logo */
-    object-fit: contain; /* Garante que a imagem não fique distorcida */
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2)); /* Sombra leve na logo */
+    width: 32px;  
+    height: 32px; 
+    object-fit: contain; 
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4)) grayscale(20%); 
     transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-/* Efeito ao passar o mouse: a logo ganha destaque e sobe levemente */
 .steam-link:hover {
     transform: translateY(-2px);
 }
 
 .steam-link:hover .steam-icon-img {
-    opacity: 0.8; /* Dá o feedback visual de clique */
-    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4));
+    opacity: 1;
+    filter: drop-shadow(0px 4px 8px rgba(232, 201, 106, 0.3)) grayscale(0%);
 }
 
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
-                url('imagens/ghost-of-tsushima-directors-cut-uhd-4k-wallpaper.jpeg') no-repeat center center/cover;
-    height: 70vh; 
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    color: var(--branco);
-    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(6, 7, 10, 0.4) 0%, rgba(6, 7, 10, 0.8) 100%),
+        linear-gradient(to bottom, rgba(6, 7, 10, 0.5) 0%, #0d0e12 100%),
+        url('kct.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.hero-content h1 {
-    font-family: var(--fonte-tradicional);
-    font-weight: 700;
-    font-size: 52px;
+.hero-section:has(img), 
+.hero-section[style*="background"] {
+    background: linear-gradient(rgba(6, 7, 10, 0.75), rgba(6, 7, 10, 0.85)) !important;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle 1px at 20% 30%, rgba(232,201,106,0.4) 0%, transparent 100%),
+        radial-gradient(circle 1px at 80% 20%, rgba(232,201,106,0.3) 0%, transparent 100%),
+        radial-gradient(circle 1px at 60% 70%, rgba(232,201,106,0.2) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold-bright), transparent);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 5%;
+}
+
+.hero-eyebrow {
+    font-size: 0.75em;
     letter-spacing: 6px;
-    margin-bottom: 10px;
-    color: var(--dourado-escuro); 
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.hero-content p {
-    font-family: var(--fonte-moderna);
-    font-size: 16px;
-    margin-bottom: 30px;
-    font-weight: 300;
-    letter-spacing: 1px;
-}
-
-.shodo-art {
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 24px;
     display: block;
-    font-size: 90px;
-    color: rgba(255, 85, 85, 0.25); 
-    font-family: var(--fonte-tradicional);
-    line-height: 1;
-    margin-bottom: -5px;
-    font-weight: 700;
 }
 
-.btn-main {
-    font-family: var(--fonte-moderna);
-    display: inline-block;
-    padding: 12px 35px;
-    background-color: transparent;
-    color: var(--dourado-escuro);
-    border: 2px solid var(--dourado-escuro);
-    text-decoration: none;
-    font-weight: bold;
+.hero-kamon {
+    font-size: 2.5em;
+    color: var(--gold-bright);
+    margin: 16px 0;
+    opacity: 0.7;
+    display: block;
+}
+
+.hero-subtitle {
+    font-style: italic;
+    font-size: 1.1em;
+    color: var(--white-dim);
+    max-width: 500px;
+    margin: 0 auto 36px;
+}
+
+.gold-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 28px auto;
+    max-width: 300px;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-mid));
+}
+
+.gold-divider::before { 
+    background: linear-gradient(to left, transparent, var(--gold-mid)); 
+}
+
+.gold-divider-icon {
+    color: var(--gold-bright);
+    font-size: 1.2em;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-internal {
+    height: 45vh !important;
+    min-height: 45vh !important;
+}
+
+.btn-primary, .btn-main {
+    font-size: 0.8em;
     letter-spacing: 2px;
-    transition: 0.4s ease;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    background: var(--gold-bright);
+    color: var(--black-deep);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
 }
 
-.btn-main:hover {
-    background-color: var(--dourado-escuro);
-    color: var(--preto);
+.btn-primary:hover, .btn-main:hover {
+    background: #f0d880;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232,201,106,0.35);
+    color: var(--black-deep);
 }
 
-/* ==========================================================================
-   CONTEÚDO PRINCIPAL E RODAPÉ
-   ========================================================================== */
+.btn-ghost {
+    font-size: 0.8em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 13px 36px;
+    background: transparent;
+    color: var(--gold-bright);
+    border: 1px solid var(--gold-bright);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+}
+
+.btn-ghost:hover {
+    background: var(--gold-glow);
+    transform: translateY(-2px);
+}
+
 .container {
     max-width: 1100px;
     margin: 60px auto;
     padding: 0 20px;
 }
 
+.story-section, .full-section {
+    padding: 100px 5%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-eyebrow {
+    font-size: 0.7em;
+    letter-spacing: 5px;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    margin-bottom: 16px;
+}
+
+.section-header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--white-dim);
+    font-style: italic;
+}
+
+.bg-alt {
+    background-color: var(--black-mid);
+}
+
+.section-spacing {
+    margin-bottom: 80px; 
+    scroll-margin-top: 120px; 
+}
+
 .game-intro {
     display: flex;
     align-items: center;
     gap: 50px;
-    
 }
 
 .intro-text {
@@ -215,23 +418,26 @@ body {
 }
 
 .intro-text h2 {
-    font-family: var(--fonte-tradicional);
-    font-size: 36px;
-    color: var(--preto);
-    font-weight: 700;
+    font-size: 2em;
+    color: var(--white);
 }
 
 .divider {
     border: 0;
     height: 3px;
-    background-color: var(--dourado-escuro);
+    background-color: var(--gold-bright);
     width: 60px;
     margin: 15px 0 25px 0;
 }
 
+.caminho-samurai .divider,
+.preview-header .divider {
+    margin: 15px auto 25px auto;
+}
+
 .intro-text p {
     margin-bottom: 20px;
-    color: #333;
+    color: var(--white-dim);
 }
 
 .intro-image {
@@ -242,46 +448,29 @@ body {
     width: 100%;
     height: auto;
     border-radius: 4px;
-    box-shadow: 10px 10px 0px var(--preto); 
-    border: 1px solid #ddd;
+    box-shadow: 10px 10px 0px var(--black-panel); 
+    border: 1px solid var(--black-border);
 }
 
-/* ==========================================================================
-   SESSÃO: O CAMINHO DO SAMURAI (COM IMAGEM DE FUNDO)
-   ========================================================================== */
 .caminho-samurai {
-    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
-                url('imagens/caminho-samurai-bg.jpg') no-repeat center center/cover;
-    background-attachment: fixed; 
     padding: 80px 20px;
-    color: var(--branco);
     text-align: center;
 }
 
 .caminho-samurai h2 {
-    font-family: var(--fonte-tradicional);
-    font-size: 38px;
-    color: var(--dourado-escuro);
-    letter-spacing: 3px;
-}
-
-.caminho-samurai .divider {
-    margin: 15px auto 25px auto;
+    color: var(--gold-bright);
 }
 
 .caminho-samurai p {
     max-width: 800px;
     margin: 0 auto 30px auto;
-    color: #e0e0e0;
+    color: var(--white-dim);
     font-size: 17px;
 }
 
-/* ==========================================================================
-   NOVA SEÇÃO: PRÉVIA DA GAMEPLAY
-   ========================================================================== */
 .gameplay-preview {
     margin-top: 80px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--black-border);
     padding-top: 60px;
 }
 
@@ -290,20 +479,11 @@ body {
     margin-bottom: 40px;
 }
 
-.preview-header h2 {
-    font-family: var(--fonte-tradicional);
-    font-size: 36px;
-    color: var(--preto);
-}
-
-.preview-header .divider {
-    margin: 15px auto;
-}
-
 .subtitle {
-    font-family: var(--fonte-moderna);
+    font-family: 'Lora', serif;
     font-size: 15px;
-    color: #666;
+    color: var(--white-dim);
+    font-style: italic;
 }
 
 .preview-grid {
@@ -313,23 +493,24 @@ body {
 }
 
 .preview-card {
-    background: #fdfdfd;
+    background: var(--black-panel);
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border: 1px solid #ddd;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 1px solid var(--black-border);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .preview-card:hover {
     transform: translateY(-5px);
+    border-color: var(--gold-bright);
 }
 
 .card-image img {
     width: 100%;
     height: 220px;
-    object-fit: cover; /* Recorta a imagem perfeitamente no container */
-    border-bottom: 3px solid var(--dourado-escuro);
+    object-fit: cover; 
+    border-bottom: 3px solid var(--gold-bright);
 }
 
 .card-content {
@@ -337,158 +518,301 @@ body {
 }
 
 .card-content h3 {
-    font-family: var(--fonte-tradicional);
-    font-size: 22px;
-    color: var(--preto);
     margin-bottom: 12px;
 }
 
 .card-content p {
-    font-family: var(--fonte-moderna);
-    font-size: 13px;
-    color: #555;
+    font-size: 14px;
+    color: var(--white-dim);
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   RODAPÉ
-   ========================================================================== */
-.footer {
-    font-family: var(--fonte-moderna);
-    background-color: var(--preto);
-    color: #777;
+.page-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--black-mid);
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--gold-bright);
+}
+
+.page-tab {
+    font-size: 0.75em;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    background: var(--black-panel);
+    color: var(--white-dim);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-right: 1px solid var(--black-border);
+}
+
+.page-tab:last-child { 
+    border-right: none; 
+}
+
+.page-tab:hover { 
+    background: #141520; 
+    color: var(--gold-bright); 
+}
+
+.page-tab.active {
+    background: var(--black-deep);
+    color: var(--gold-bright);
+    border-bottom: 2px solid var(--gold-bright);
+    margin-bottom: -2px;
+}
+
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+    animation: fadeUpAnimation 0.6s ease-out forwards;
+}
+
+.lore-block {
+    max-width: 780px;
+    margin: 0 auto 40px;
+}
+
+.lore-block h3 {
+    margin-bottom: 12px;
+}
+
+.bloco-texto {
+    border-left: 3px solid var(--gold-bright);
+    padding: 16px 24px;
+    background: rgba(232,201,106,0.05);
+    margin: 24px 0;
+    color: var(--white-dim);
+    font-style: italic;
+}
+
+.conflict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 900px;
+    margin: 40px auto 0;
+}
+
+.dilemma-card {
+    padding: 32px 28px;
+    border: 1px solid var(--black-border);
+    background: var(--black-panel);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dilemma-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+}
+
+.honor-card { 
+    border-top: 3px solid var(--white-dim); 
+}
+
+.honor-card h3 { 
+    color: var(--white); 
+}
+
+.necessity-card { 
+    border-top: 3px solid var(--gold-bright); 
+}
+
+.necessity-card h3 { 
+    color: var(--gold-bright); 
+}
+
+.spoiler-box {
     text-align: center;
-    padding: 30px 20px;
-    font-size: 13px;
-    border-top: 4px solid var(--dourado-escuro);
-    letter-spacing: 1px;
+    margin-top: 48px;
 }
 
-/* ==========================================================================
-   MEDIA QUERIES (RESPONSIVIDADE PARA CELULARES E TABLETS)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        padding: 15px 20px;
-        gap: 15px;
-    }
-
-    .nav-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .nav-links li {
-        margin-left: 0; 
-    }
-
-    .steam-item {
-        margin-top: 5px;
-    }
-
-    .hero-section {
-        height: 60vh; 
-    }
-
-    .hero-content h1 {
-        font-size: 34px; 
-        letter-spacing: 3px;
-    }
-
-    .hero-content p {
-        font-size: 14px;
-    }
-
-    .shodo-art {
-        font-size: 65px; 
-    }
-
-    .container {
-        margin: 40px auto;
-    }
-
-    .game-intro {
-        flex-direction: column; 
-        gap: 30px;
-    }
-
-    .intro-text h2 {
-        font-size: 28px;
-        text-align: center;
-    }
-
-    .divider {
-        margin: 15px auto 25px auto; 
-    }
-
-    .intro-image img {
-        box-shadow: 6px 6px 0px var(--preto);
-    }
-
-    .caminho-samurai {
-        padding: 50px 20px;
-        background-attachment: scroll; 
-    }
-
-    .caminho-samurai h2 {
-        font-size: 28px;
-    }
-
-    .caminho-samurai p {
-        font-size: 15px;
-    }
-
-    /* Responsividade da nova seção de Gameplay */
-    .preview-grid {
-        grid-template-columns: 1fr; /* Vira uma única coluna no celular */
-        gap: 25px;
-    }
-
-    .preview-header h2 {
-        font-size: 28px;
-    }
+.spoiler-box h3 { 
+    margin-bottom: 16px; 
 }
 
-
-
-/* comentário insano diferenciando página do index e do sobre :fire emoji:*/ 
-
-/* ==========================================================================
-   CONFIGURAÇÕES GERAIS DE COMPORTAMENTO
-   ========================================================================== */
-html {
-    scroll-behavior: smooth; /* Faz a tela deslizar suavemente ao clicar nos links */
+.content-reveal {
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid var(--black-border);
+    background: var(--black-panel);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.section-spacing {
-    margin-bottom: 80px; 
-    scroll-margin-top: 120px; 
+.hidden { 
+    display: none; 
 }
 
-/* Reduz a altura do banner principal para páginas internas */
-.hero-internal {
-    height: 45vh !important;
+.gameplay-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    margin-top: 60px;
+    background: var(--black-border);
 }
 
-/* ==========================================================================
-   SEÇÃO DE SELEÇÃO DE ASSUNTOS (QUICK NAV)
-   ========================================================================== */
+.gameplay-card {
+    background: var(--black-panel);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+}
+
+.gameplay-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold-bright), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+}
+
+.gameplay-card:hover { 
+    background: #141520; 
+}
+
+.gameplay-card:hover::before { 
+    transform: scaleX(1); 
+}
+
+.gameplay-card-icon {
+    font-size: 2.4em;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.gameplay-card h3 { 
+    margin-bottom: 12px; 
+    font-size: 1.1em; 
+}
+
+.gameplay-card p { 
+    font-size: 0.92em; 
+    color: #a8a090; 
+    line-height: 1.6; 
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--black-border);
+    margin-top: 80px;
+    border-top: 2px solid var(--gold-bright);
+    border-bottom: 2px solid var(--gold-bright);
+}
+
+.stat-block {
+    background: var(--black-panel);
+    padding: 36px 24px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.8em;
+    font-weight: 900;
+    color: var(--gold-bright);
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.78em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+}
+
+.mechanics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--black-border);
+    margin-top: 60px;
+}
+
+.mechanic-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    background: var(--black-panel);
+    transition: background 0.2s;
+}
+
+.mechanic-item:hover { 
+    background: #141520; 
+}
+
+.mechanic-number {
+    font-size: 0.7em;
+    letter-spacing: 2px;
+    color: var(--gold-mid);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(232,201,106,0.04);
+    border-right: 1px solid var(--black-border);
+    padding: 32px 20px;
+    text-transform: uppercase;
+}
+
+.mechanic-content { 
+    padding: 32px 36px; 
+}
+
+.mechanic-content h3 { 
+    font-size: 1.15em; 
+    margin-bottom: 8px; 
+}
+
+.mechanic-content p { 
+    font-size: 0.92em; 
+    color: #a8a090; 
+    line-height: 1.65; 
+    max-width: 700px; 
+}
+
+.mechanic-tags { 
+    display: flex; 
+    gap: 8px; 
+    margin-top: 16px; 
+    flex-wrap: wrap; 
+}
+
+.tag {
+    font-size: 0.65em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border: 1px solid var(--black-border);
+    color: var(--gold-mid);
+}
+
 .quick-nav {
-    background-color: #dfdeb8;
-    padding: 5px 0;
+    background-color: var(--black-mid);
+    padding: 15px 0;
     text-align: center;
-    border-bottom: 2px solid var(--branco);
+    border-bottom: 2px solid var(--black-border);
 }
 
 .quick-nav h3 {
-    font-family: var(--fonte-tradicional);
-    font-size: 18px;
-    color: #2b2519;
     margin-bottom: 15px;
-    letter-spacing: 1px;
 }
 
 .quick-links {
@@ -499,36 +823,32 @@ html {
 }
 
 .btn-quick {
-    font-family: var(--fonte-moderna);
     font-size: 12px;
     font-weight: bold;
     text-decoration: none;
-    color: var(--preto);
-    background-color: var(--branco);
+    color: var(--white);
+    background-color: var(--black-panel);
     padding: 8px 18px;
     border-radius: 2px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid var(--black-border);
     transition: all 0.3s ease;
 }
 
 .btn-quick:hover {
-    background-color: var(--preto);
-    color: var(--branco);
+    background-color: var(--gold-bright);
+    color: var(--black-deep);
     transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   LOGOS DE PLATAFORMAS E AJUSTES DE LOJAS
-   ========================================================================== */
-.platform-card {
+.platform-card { 
     flex: 1; 
     min-width: 280px; 
-    width: 100%;
+    width: 100%; 
 }
 
-.platform-card h4 {
-    text-align: center;
-    margin-bottom: 10px;
+.platform-card h4 { 
+    text-align: center; 
+    margin-bottom: 10px; 
 }
 
 .platform-logos {
@@ -536,224 +856,242 @@ html {
     justify-content: center;
     gap: 120px;
     margin-bottom: 25px;
-    background: #f0eeee;
+    background: var(--black-panel);
     padding: 15px;
     border-radius: 4px;
+    border: 1px solid var(--black-border);
 }
 
 .platform-img {
-    height: 100px; /* Controla a altura padrão das logos de console/pc */
+    height: 100px;
     width: auto;
     object-fit: contain;
-    filter: grayscale(30%);
+    filter: grayscale(40%) brightness(80%);
     transition: filter 0.3s ease;
 }
 
-.platform-img:hover {
-    filter: grayscale(0%);
+.platform-img:hover { 
+    filter: grayscale(0%) brightness(100%); 
 }
 
 .store-buttons {
     display: flex; 
-    gap: 85px; 
+    gap: 40px; 
     justify-content: center; 
     flex-wrap: wrap;
     padding: 10px;
 }
 
-.btn-steam-store {
-    padding: 8px 20px !important; 
+.btn-steam-store, .btn-ps-store {
+    padding: 10px 24px !important; 
     font-size: 12px !important; 
-    background: #171a21 !important; 
     color: #fff !important; 
-    border-color: #171a21 !important;
+}
+
+.btn-steam-store {
+    background: #171a21 !important; 
+    border: 1px solid #2a3f5a !important;
 }
 
 .btn-ps-store {
-    padding: 8px 20px !important; 
-    font-size: 12px !important; 
     background: #003087 !important; 
-    color: #fff !important; 
-    border-color: #003087 !important;
+    border: 1px solid #0043c0 !important;
 }
 
-/* ==========================================================================
-   LAYOUTS ADICIONAIS DA FICHA TÉCNICA
-   ========================================================================== */
-.dev-card-layout {
+.dev-card-layout { 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     text-align: center; 
-    padding: 30px 20px;
+    padding: 30px 20px; 
 }
 
-.dev-logo-container {
+.dev-logo-container { 
     height: 100px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    margin-bottom: 15px;
+    margin-bottom: 15px; 
 }
 
-.dev-page-logo {
+.dev-page-logo { 
     max-height: 80px; 
     width: auto; 
-    object-fit: contain;
+    object-fit: contain; 
 }
 
-.dev-page-logo-goty{
+.dev-page-logo-goty { 
     max-height: 130px; 
     width: auto; 
-    object-fit: contain;
+    object-fit: contain; 
 }
 
-.awards-card {
+.awards-card { 
     padding: 30px 25px; 
-    background-color: #fffdf7; 
-    border-left: 4px solid var(--dourado-escuro);
+    background-color: var(--black-panel); 
+    border-left: 4px solid var(--gold-bright); 
+    border-top: 1px solid var(--black-border); 
+    border-right: 1px solid var(--black-border); 
+    border-bottom: 1px solid var(--black-border); 
 }
 
-.awards-list {
-    font-family: var(--fonte-moderna); 
-    font-size: 13px; 
-    color: #444; 
+.awards-list { 
+    font-size: 14px; 
+    color: var(--white-dim); 
     list-style: square; 
     padding-left: 20px; 
-    line-height: 1.8;
+    line-height: 1.8; 
 }
 
-.text-center {
-    padding: 0 !important;
+.text-center { 
+    padding: 0 !important; 
 }
 
-/* Requisitos */
-.spec-card-min {
+.spec-card-min, .spec-card-rec { 
     padding: 25px; 
-    border-top: 4px solid #888;
+    background: var(--black-panel); 
+    border-left: 1px solid var(--black-border); 
+    border-right: 1px solid var(--black-border); 
+    border-bottom: 1px solid var(--black-border); 
 }
 
-.spec-card-rec {
-    padding: 25px; 
-    border-top: 4px solid var(--dourado-escuro); 
-    background-color: #fffdf7;
+.spec-card-min { 
+    border-top: 4px solid #555; 
 }
 
-.spec-card-min h3, .spec-card-rec h3 {
+.spec-card-rec { 
+    border-top: 4px solid var(--gold-bright); 
+}
+
+.spec-card-min h3, .spec-card-rec h3 { 
     font-size: 18px; 
     margin-bottom: 15px; 
-    border-bottom: 1px solid #eee; 
-    padding-bottom: 8px;
+    border-bottom: 1px solid var(--black-border); 
+    padding-bottom: 8px; 
 }
 
-.spec-card-min h3 small, .spec-card-rec h3 small {
+.spec-card-min h3 small, .spec-card-rec h3 small { 
     font-size: 12px; 
     color: #777; 
     font-weight: normal; 
-    display: block;
+    display: block; 
 }
 
-.specs-list {
-    font-family: var(--fonte-moderna); 
+.specs-list { 
     list-style: none; 
     font-size: 13px; 
-    color: #444; 
-    line-height: 2;
+    color: var(--white-dim); 
+    line-height: 2; 
 }
 
-/* Reviews */
-.review-padding {
-    padding: 25px;
+.review-padding { 
+    padding: 25px; 
+    background: var(--black-panel); 
+    border: 1px solid var(--black-border); 
+    border-radius: 4px; 
 }
 
-.review-meta {
+.review-meta { 
     display: flex; 
     justify-content: space-between; 
     margin-bottom: 10px; 
-    font-family: var(--fonte-moderna); 
     font-size: 12px; 
-    color: #777;
+    color: var(--white-dim); 
 }
 
-.stars {
-    color: var(--dourado-escuro);
+.stars { 
+    color: var(--gold-bright); 
 }
 
-.review-text {
-    font-family: var(--fonte-moderna); 
+.review-text { 
     font-size: 13px; 
-    color: #555; 
-    font-style: italic;
+    color: var(--text-body); 
+    font-style: italic; 
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE EXCLUSIVA ADICIONAL
-   ========================================================================== */
-@media (max-width: 768px) {
-    .quick-links {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0 20px;
-    }
-    
-    .hero-internal {
-        height: 35vh !important;
-    }
-}
-
-/* Reduz a altura e troca a imagem de fundo exclusivamente para a página de infos */
-.hero-internal {
-    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
-                url('imagens/download\ \(1\).jpg') no-repeat center center/cover !important;
-    height: 45vh !important;
-}
-
-@keyframes fadeUpAnimation {
-    from {
-        opacity: 0;
-        transform: translateY(30px); /* Começa 30 pixels mais para baixo */
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);    /* Termina na posição original dele */
-    }
-}
-
-.fade-up {
-    animation: fadeUpAnimation 1s ease-out forwards;
-}
-
-/* ==========================================================================
-   SEÇÃO DE CLASSIFICAÇÃO INDICATIVA (REDUZIDA)
-   ========================================================================== */
 .classificacao-container {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-top: 25px;
-    background: rgba(0, 0, 0, 0.03); /* Um fundo cinza bem sutil */
+    background: rgba(255, 255, 255, 0.02);
     padding: 15px;
     border-radius: 4px;
-    border-left: 3px solid #e52229; /* Borda vermelha fina simulando o selo 18 */
+    border: 1px solid var(--black-border);
+    border-left: 4px solid #e52229;
 }
 
-.class-badge {
-    width: 45px;  /* Tamanho ideal para não quebrar o layout */
-    height: 45px;
-    object-fit: contain;
+.class-badge { 
+    width: 45px; 
+    height: 45px; 
+    object-fit: contain; 
 }
 
-.class-texto h3 {
-    font-family: var(--fonte-tradicional);
-    font-size: 15px;
-    color: var(--preto);
-    margin-bottom: 2px;
+.class-texto h3 { 
+    font-size: 15px; 
+    color: var(--white); 
+    margin-bottom: 2px; 
 }
 
-.class-texto p {
-    font-family: var(--fonte-moderna);
-    font-size: 12px;
-    color: #555;
-    line-height: 1.4;
-    margin-bottom: 0 !important; /* Evita que a margem de parágrafos antiga quebre o alinhamento */
+.class-texto p { 
+    font-size: 12px; 
+    color: var(--white-dim); 
+    line-height: 1.4; 
+    margin-bottom: 0 !important; 
+}
+
+@keyframes fadeUpAnimation {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { 
+    animation: fadeUpAnimation 1s ease-out forwards; 
+}
+
+@media (max-width: 768px) {
+    .navbar { padding: 15px 5%; }
+    .nav-links { display: none; }
+    .hero-content h1 { font-size: 2.5em; }
+    .hero-internal { height: 35vh !important; min-height: 35vh !important; }
+    .game-intro { flex-direction: column; gap: 30px; }
+    .intro-text h2 { text-align: center; }
+    .intro-image img { box-shadow: 6px 6px 0px var(--black-panel); }
+    .preview-grid, .conflict-grid, .mechanic-item { grid-template-columns: 1fr; }
+    .mechanic-number { writing-mode: horizontal-tb; padding: 16px 32px; border-right: none; border-bottom: 1px solid var(--black-border); }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .page-tab { padding: 14px 18px; font-size: 0.65em; }
+    .story-section, .full-section { padding: 60px 5%; }
+    .quick-links { flex-direction: column; align-items: stretch; padding: 0 20px; }
+    .platform-logos { gap: 40px; flex-wrap: wrap; }
+    .store-buttons { gap: 20px; }
+}
+
+footer {
+    background-color: var(--black-deep);
+    border-top: 2px solid var(--gold-bright);
+    padding: 48px 5%;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 1.2em;
+    letter-spacing: 4px;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+    display: block;
+}
+
+footer p {
+    font-size: 0.82em;
+    color: #5a5548;
+    margin-top: 8px;
+}
+
+footer a { 
+    color: var(--gold-mid); 
+}
+
+footer a:hover { 
+    color: var(--gold-bright); 
 }
