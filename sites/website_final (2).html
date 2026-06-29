@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost of Tsushima | O Código e a Sombra</title>
+    <link rel="stylesheet" href="style_final_2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CURSOR KUNAI ===== */
+        /* Esconde o cursor padrão em todo o documento */
+        * { cursor: none !important; }
+
+        /* O cursor kunai em si: SVG inline via pseudo-element não funciona,
+           então usamos um div flutuante controlado por JS */
+        #kunai-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            pointer-events: none;
+            z-index: 99999;
+            /* Ponta aponta pra cima no SVG, então -45deg a deixa diagonal superior-esquerda */
+            transform: translate(-50%, -50%) rotate(-45deg);
+            filter: drop-shadow(0 0 4px rgba(232,201,106,0.6));
+        }
+
+        /* Trilha dourada ao mover o cursor */
+        .kunai-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(232, 201, 106, 0.5);
+            pointer-events: none;
+            z-index: 99998;
+            animation: trailFade 0.5s ease-out forwards;
+        }
+        @keyframes trailFade {
+            from { opacity: 0.8; transform: scale(1); }
+            to   { opacity: 0;   transform: scale(0); }
+        }
+
+        /* ===== GIF SHOWCASE na Gameplay ===== */
+        .gif-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3px;
+            background: rgba(232,201,106,0.15);
+            margin: 60px 0 0;
+        }
+
+        .gif-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #06070a;
+        }
+
+        .gif-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(0.7) saturate(0.8);
+        }
+
+        .gif-item:hover img {
+            transform: scale(1.04);
+            filter: brightness(1) saturate(1.1);
+        }
+
+        .gif-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 16px;
+            background: linear-gradient(to top, rgba(6,7,10,0.9) 0%, transparent 100%);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #e8c96a;
+        }
+
+        /* linha dourada divisória antes dos gifs */
+        .gif-section-title {
+            text-align: center;
+            padding: 60px 5% 20px;
+        }
+        .gif-section-title span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7em;
+            letter-spacing: 5px;
+            color: #c9a84c;
+            text-transform: uppercase;
+        }
+        .gif-section-title h3 {
+            color: #f4f0e8;
+            font-size: 1.4em;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== CURSOR KUNAI SVG ===== -->
+    <div id="kunai-cursor">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36">
+            <!-- Lâmina da kunai -->
+            <polygon points="18,2 22,14 18,12 14,14" fill="#e8c96a"/>
+            <!-- Corpo -->
+            <rect x="16.5" y="12" width="3" height="10" fill="#c9a84c"/>
+            <!-- Guarda (tsuba) -->
+            <rect x="13" y="21" width="10" height="2.5" rx="1" fill="#8a6820"/>
+            <!-- Cabo -->
+            <rect x="16.5" y="23.5" width="3" height="7" fill="#5a4010"/>
+            <!-- Anel da cauda -->
+            <circle cx="18" cy="32" r="2" fill="none" stroke="#e8c96a" stroke-width="1.2"/>
+            <!-- Reflexo na lâmina -->
+            <polygon points="18,3 19.5,10 18,9" fill="#fff8e0" opacity="0.5"/>
+        </svg>
+    </div>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <span class="nav-logo">Ghost of Tsushima</span>
+        <ul class="nav-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="#paginas" onclick="switchTab('historia')">História</a></li>
+            <li><a href="#paginas" onclick="switchTab('gameplay')">Gameplay</a></li>
+            <li><a href="#paginas" onclick="switchTab('jogabilidade')">Jogabilidade</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+
+        </ul>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <span class="hero-eyebrow">PlayStation Studios · 2020</span>
+            <h1>Ghost of<br>Tsushima</h1>
+            <span class="hero-kamon">⛩</span>
+            <p class="hero-subtitle">Em uma ilha de beleza lendária, o código samurai deve cair para que Tsushima sobreviva.</p>
+            <div class="gold-divider">
+                <span class="gold-divider-icon">✦</span>
+            </div>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="switchTab('historia'); document.getElementById('paginas').scrollIntoView({behavior:'smooth'})">
+                    Explorar a História
+                </button>
+                <button class="btn-ghost" onclick="switchTab('gameplay'); document.getElementById('paginas').scrollIntoView({behavior:'smooth'})">
+                    Ver Gameplay
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== TABS ========== -->
+    <div id="paginas">
+        <div class="page-tabs">
+            <button class="page-tab active" id="tab-historia" onclick="switchTab('historia')">I. História</button>
+            <button class="page-tab" id="tab-gameplay" onclick="switchTab('gameplay')">II. Gameplay</button>
+            <button class="page-tab" id="tab-jogabilidade" onclick="switchTab('jogabilidade')">III. Jogabilidade</button>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- PÁGINA 1: HISTÓRIA                                        -->
+        <!-- ======================================================== -->
+        <div class="page-content active" id="page-historia">
+
+            <div class="full-section bg-alt">
+                <div class="story-section">
+                    <div class="section-header">
+                        <span class="section-eyebrow">Capítulo I</span>
+                        <h2>🏯 O Código Bushido</h2>
+                        <p>O mundo de Jin Sakai antes da invasão.</p>
+                    </div>
+                    <div class="lore-block">
+                        <h3>Jin Sakai e a Ilha de Tsushima</h3>
+                        <p>Você controla Jin Sakai, um samurai da elite de Tsushima. Sua vida inteira é regida pelo <strong style="color:var(--gold-bright)">Bushido</strong> — um código rigoroso que valoriza acima de tudo a honra, o combate frontal e o sacrifício digno no campo de batalha.</p>
+                        <div class="bloco-texto">
+                            "Na mente de Jin, o guerreiro perfeito nunca deve manchar seu nome com táticas desonrosas. Tsushima existe nesse ritmo quase mítico: beleza natural confrontando a disciplina militar ancestral."
+                        </div>
+                        <p>Treinado desde criança pelo seu tio, o lorde Shimura, Jin encarna os valores de sua classe. A ilha vive em paz frágil, e Jin é um de seus guardiões.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-section">
+                <div class="story-section">
+                    <div class="section-header">
+                        <span class="section-eyebrow">Capítulo II</span>
+                        <h2>💥 A Chegada da Tempestade</h2>
+                        <p>O momento que muda tudo.</p>
+                    </div>
+                    <div class="lore-block">
+                        <h3>O Inimigo Implacável</h3>
+                        <p>A paz é brutalmente interrompida pela chegada da horda mongol liderada por <strong style="color:var(--gold-bright)">Khotun Khan</strong>. Não são apenas soldados — são uma máquina de guerra que ameaça apagar a cultura e o povo japonês de Tsushima para sempre.</p>
+                        <div class="bloco-texto">
+                            "Os samurais de Tsushima, orgulhosos de seu código, marcham para a batalha na praia de Komoda. É uma matança. O Bushido que os define torna-se sua sentença de morte."
+                        </div>
+                        <p>Jin sobrevive — mas a derrota é total. Seu tio é capturado. Os guerreiros são massacrados. E Jin percebe a verdade cruel: a honra sozinha não é suficiente para salvar ninguém.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-section bg-alt">
+                <div class="story-section">
+                    <div class="section-header">
+                        <span class="section-eyebrow">Capítulo III</span>
+                        <h2>🌪️ Honra vs. Sobrevivência</h2>
+                        <p>O dilema que define a jornada de Jin.</p>
+                    </div>
+                    <div class="conflict-grid">
+                        <article class="dilemma-card honor-card">
+                            <h3>⚔️ Caminho da Honra</h3>
+                            <p>Lutar como um samurai. Confrontar os inimigos de frente, declarar sua presença, morrer com dignidade. É o ideal que Jin foi criado para seguir — mas que Tsushima não pode se dar ao luxo.</p>
+                        </article>
+                        <article class="dilemma-card necessity-card">
+                            <h3>👤 Caminho da Sombra</h3>
+                            <p>Adotar táticas furtivas, ataques noturnos, veneno, medo psicológico. Desonroso segundo o Bushido — mas brutalmente eficaz. O nascimento do "Fantasma de Tsushima".</p>
+                        </article>
+                    </div>
+                    <div class="spoiler-box">
+                        <h3>A Escolha Impossível</h3>
+                        <button id="revealConflictBtn" class="btn-ghost" onclick="toggleSpoiler()">Revelar o Verdadeiro Dilema</button>
+                        <div id="conflictReveal" class="content-reveal hidden">
+                            <p>O ponto mais brutal da história não é a guerra — é a traição que Jin precisa cometer. Para libertar seu tio e salvar Tsushima, ele deve abandonar tudo que foi ensinado a amar. Cada vitória como o Fantasma é uma vitória para o povo, mas uma morte lenta para Jin Sakai, o samurai.</p>
+                            <p style="margin-top:12px; color:var(--gold-mid); font-style:italic;">"A honra que você busca já está morta. O que resta é escolher quem vai viver."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-section">
+                <div class="story-section">
+                    <div class="section-header">
+                        <span class="section-eyebrow">Capítulo IV</span>
+                        <h2>👤 O Legado do Fantasma</h2>
+                        <p>A transformação que ninguém pode deter.</p>
+                    </div>
+                    <div class="lore-block">
+                        <p>Enquanto Jin avança pela ilha, o Fantasma cresce além de sua vontade. Os aldeões começam a contar lendas sobre um espírito que protege Tsushima. Os mongóis começam a temer a noite. E o próprio Jin começa a questionar se ainda existe um "Jin Sakai" para voltar após a guerra.</p>
+                        <div class="bloco-texto">
+                            "Ghost of Tsushima é sobre um homem forçado a assassinar sua própria identidade para salvar seu povo. É o confronto entre quem você foi criado para ser e quem o mundo precisa que você se torne."
+                        </div>
+                        <p>A jornada termina onde toda grande tragédia termina: com uma vitória que tem o sabor de perda, e uma escolha que não tem resposta certa.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /page-historia -->
+
+
+        <!-- ======================================================== -->
+        <!-- PÁGINA 2: GAMEPLAY (com GIFs)                            -->
+        <!-- ======================================================== -->
+        <div class="page-content" id="page-gameplay">
+
+            <div class="full-section">
+                <div class="section-header" style="padding-top:60px">
+                    <span class="section-eyebrow">Experiência de Jogo</span>
+                    <h2>O Que Te Espera</h2>
+                    <p>Ghost of Tsushima combina ação intensa com exploração contemplativa num Japão feudal em chamas.</p>
+                </div>
+            </div>
+
+            <!-- GIFs do jogo em destaque -->
+            <div class="gif-section-title">
+                <span>Imagens Reais do Jogo</span>
+                <h3>Veja o Jogo em Ação</h3>
+            </div>
+
+            <div class="gif-showcase">
+                <!-- GIF 1: combate espada grupo -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/In54I1s-M6wAAAAC/ghostof-tsushima-sword.gif"
+                        alt="Ghost of Tsushima - Combate com espada"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">⚔️ Combate com Posturas</span>
+                </div>
+                <!-- GIF 2: duelo folhas caindo -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/5GKclPGiHLwAAAAC/ghost-of-tsushima-slash.gif"
+                        alt="Ghost of Tsushima - Duelo samurai"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">🍂 Duelos Cinematográficos</span>
+                </div>
+                <!-- GIF 3: stealth kill -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/YCL3LV3WaP0AAAAC/stealth-kill-ghost-of-tsushima.gif"
+                        alt="Ghost of Tsushima - Stealth kill"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">👤 Eliminação Furtiva</span>
+                </div>
+                <!-- GIF 4: briga em grupo -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/v4Ni7-9Y5CUAAAAC/ghost-of-tsushima-slaughter.gif"
+                        alt="Ghost of Tsushima - Batalha em grupo"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">🔥 Batalhas em Grupo</span>
+                </div>
+                <!-- GIF 5: árvore sakura katana -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/9hIY2TyBpqAAAAAS/ghost-of-tushima.gif"
+                        alt="Ghost of Tsushima - Cerejeira e katana"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">🌸 Mundo Aberto</span>
+                </div>
+                <!-- GIF 6: standoff -->
+                <div class="gif-item">
+                    <img
+                        src="https://media.tenor.com/HF3tnRi5LGYAAAAC/ghost-of-tsushima-video-game.gif"
+                        alt="Ghost of Tsushima - Stand-off"
+                        loading="lazy"
+                    >
+                    <span class="gif-label">🎭 Stand-off</span>
+                </div>
+            </div>
+
+            <!-- Cards de mecânicas de gameplay -->
+            <div class="full-section" style="padding-top: 60px">
+                <div class="gameplay-grid">
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">⚔️</span>
+                        <h3>Combate por Posturas</h3>
+                        <p>Jin aprende quatro posturas únicas, cada uma eficaz contra um tipo de inimigo. Trocar de postura no calor da luta é essencial para sobreviver.</p>
+                    </div>
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">🌿</span>
+                        <h3>Mundo Aberto Vivo</h3>
+                        <p>Tsushima é um mundo aberto de rara beleza. A exploração é guiada pelo Vento do Guia, substituindo o HUD por um elemento natural do ambiente.</p>
+                    </div>
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">👤</span>
+                        <h3>Stealth e Infiltração</h3>
+                        <p>Como o Fantasma, Jin pode se infiltrar em acampamentos, eliminar sentinelas silenciosamente e espalhar o terror psicológico antes de atacar.</p>
+                    </div>
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">🏹</span>
+                        <h3>Arsenal do Fantasma</h3>
+                        <p>Além da katana, Jin possui arco, kunais, bombas de fumaça, explosivos, dardos de veneno e gancho. Cada ferramenta tem seu momento certo.</p>
+                    </div>
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">🎭</span>
+                        <h3>Duelos e Stand-offs</h3>
+                        <p>Stand-offs são momentos icônicos onde Jin enfrenta inimigos em silêncio absoluto, esperando o primeiro movimento. Altamente cinematográficos.</p>
+                    </div>
+                    <div class="gameplay-card">
+                        <span class="gameplay-card-icon">🌸</span>
+                        <h3>Modo Kurosawa</h3>
+                        <p>Tributo ao mestre do cinema japonês: preto e branco com granulado de filme, áudio vintage e atmosfera de samurai clássico de 1950.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="full-section bg-alt" style="padding-bottom: 80px">
+                <div class="section-header">
+                    <span class="section-eyebrow">Dados do Jogo</span>
+                    <h2>Tsushima em Números</h2>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-block">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Horas de Conteúdo</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Atos da Campanha</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Posturas de Combate</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-number">49</span>
+                        <span class="stat-label">Missões Secundárias</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-number">80+</span>
+                        <span class="stat-label">Armaduras e Skins</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /page-gameplay -->
+
+
+        <!-- ======================================================== -->
+        <!-- PÁGINA 3: JOGABILIDADE (MECÂNICAS)                       -->
+        <!-- ======================================================== -->
+        <div class="page-content" id="page-jogabilidade">
+
+            <div class="full-section">
+                <div class="section-header" style="padding-top:60px">
+                    <span class="section-eyebrow">Mecânicas Detalhadas</span>
+                    <h2>Como se Joga</h2>
+                    <p>Um guia completo das mecânicas que constroem a experiência de Ghost of Tsushima.</p>
+                </div>
+            </div>
+
+            <div class="full-section" style="padding-top:0">
+                <div class="mechanics-list">
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">01</span>
+                        <div class="mechanic-content">
+                            <h3>Sistema de Posturas (Stances)</h3>
+                            <p>Jin aprende as quatro posturas ao derrotar líderes mongóis. A Postura da Pedra é eficaz contra espadachins; a Postura da Água contra guerreiros com escudo; a Postura do Vento contra lanceiros; e a Postura da Lua contra brutos com armas pesadas. Identificar rapidamente o tipo de inimigo e trocar de postura é o core do combate avançado.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Combate</span>
+                                <span class="tag">Progressão</span>
+                                <span class="tag">Estratégia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">02</span>
+                        <div class="mechanic-content">
+                            <h3>Resolução e Técnicas</h3>
+                            <p>A barra de Resolução se enche ao desviar de ataques e derrotar inimigos. Com Resolução, Jin pode usar Técnicas poderosas — curas, golpes especiais das posturas, ou ataques em área. Gerenciar quando usar Resolução versus quando guardar para curar é uma decisão constante de alto impacto nas batalhas mais difíceis.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Recursos</span>
+                                <span class="tag">Combate</span>
+                                <span class="tag">Gestão</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">03</span>
+                        <div class="mechanic-content">
+                            <h3>Deflexão e Timing Perfeito</h3>
+                            <p>Pressionar o botão de deflexão no momento exato do ataque inimigo executa uma deflexão perfeita, que abre os inimigos para contra-ataques devastadores. Ataques não-anuláveis (sinalizados em vermelho) devem ser esquivados completamente. Dominar esse timing transforma o combate de caótico em fluido e satisfatório.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Habilidade</span>
+                                <span class="tag">Timing</span>
+                                <span class="tag">Combate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">04</span>
+                        <div class="mechanic-content">
+                            <h3>Vento do Guia e Exploração</h3>
+                            <p>Em vez de um mini-mapa, o jogo usa o Vento do Guia: convoque o vento e ele aponta a direção do seu objetivo. Pássaros guiam para Locais Xintoístas, raposas levam a Santuários, fumaça indica acampamentos inimigos. O mundo se comunica sem texto ou ícones intrusivos.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Exploração</span>
+                                <span class="tag">Navegação</span>
+                                <span class="tag">Imersão</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">05</span>
+                        <div class="mechanic-content">
+                            <h3>Progressão e Personalização</h3>
+                            <p>Jin evolui em duas áreas: as habilidades do Samurai (combate direto, posturas, força) e as Técnicas do Fantasma (stealth, ferramentas, arsenal). Armaduras oferecem bônus passivos distintos — a Armadura de Samurai aumenta Resolução, enquanto a Armadura do Fantasma melhora furtividade.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">RPG</span>
+                                <span class="tag">Builds</span>
+                                <span class="tag">Progressão</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">06</span>
+                        <div class="mechanic-content">
+                            <h3>Multiplayar: Legends</h3>
+                            <p>Ghost of Tsushima: Legends é o modo online gratuito. Até 4 jogadores cooperam em missões com narrativa folclórica japonesa, cada um escolhendo uma classe: Samurai (tank), Hunter (arqueiro), Ronin (suporte/curandeiro) ou Assassino (dano furtivo).</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Co-op</span>
+                                <span class="tag">Online</span>
+                                <span class="tag">Classes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mechanic-item">
+                        <span class="mechanic-number">07</span>
+                        <div class="mechanic-content">
+                            <h3>Fotografia e Expressão</h3>
+                            <p>O Modo Foto é surpreendentemente completo: controle de câmera, filtros, partículas, vento nas folhas, expressões do personagem, iluminação customizável. O jogo foi desenhado visualmente para ser fotografado — cada bioma parece uma pintura.</p>
+                            <div class="mechanic-tags">
+                                <span class="tag">Criatividade</span>
+                                <span class="tag">Comunidade</span>
+                                <span class="tag">Expressão</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /page-jogabilidade -->
+
+    </div><!-- /paginas -->
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <span class="footer-logo">⛩ Ghost of Tsushima</span>
+        <p>&copy; 2026 — Projeto Acadêmico de Design Web</p>
+        <p>Baseado na obra <a href="#">Ghost of Tsushima</a> · Sucker Punch Productions · Sony Interactive Entertainment</p>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // ===== CURSOR KUNAI =====
+        const kunai = document.getElementById('kunai-cursor');
+        let lastX = 0, lastY = 0;
+        let trailTimer = null;
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Move a kunai
+            kunai.style.left = x + 'px';
+            kunai.style.top  = y + 'px';
+
+            // Calcula o ângulo de rotação baseado na direção do movimento
+            // O SVG da kunai aponta pra CIMA (ponta no topo = -90° no sistema atan2).
+            // Queremos que a PONTA aponte na direção do movimento, com offset -45° pra
+            // deixar diagonal superior-esquerda quando parada — offset total: -135°
+            const dx = x - lastX;
+            const dy = y - lastY;
+            if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 135;
+                kunai.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+            }
+
+            // Trilha dourada
+            clearTimeout(trailTimer);
+            trailTimer = setTimeout(() => {
+                const trail = document.createElement('div');
+                trail.className = 'kunai-trail';
+                trail.style.left = x + 'px';
+                trail.style.top  = y + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 500);
+            }, 30);
+
+            lastX = x;
+            lastY = y;
+        });
+
+        // Oculta a kunai quando sai da janela
+        document.addEventListener('mouseleave', () => { kunai.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { kunai.style.opacity = '1'; });
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ===== TABS =====
+        function switchTab(tab) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('page-' + tab).classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        // ===== SPOILER =====
+        function toggleSpoiler() {
+            const reveal = document.getElementById('conflictReveal');
+            const btn    = document.getElementById('revealConflictBtn');
+            reveal.classList.toggle('hidden');
+            btn.textContent = reveal.classList.contains('hidden')
+                ? 'Revelar o Verdadeiro Dilema'
+                : 'Ocultar';
+        }
+    </script>
+
+</body>
+</html>
